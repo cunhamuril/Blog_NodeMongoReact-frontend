@@ -1,24 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+
+// React Toastify
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+// MDBootstrap
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'mdbreact/dist/css/mdb.css'
+
+import { MDBContainer } from "mdbreact";
+
+// Routes
+import Routes from './routes'
+
+// Components
+import Header from './components/template/Header'
+import Footer from './components/template/Footer'
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ToastContainer draggable={true} position={"top-right"} autoClose={2500} />
+      <Header />
+      <MDBContainer className="main">
+        <Routes />
+      </MDBContainer>
+      <Footer />
     </div>
   );
 }

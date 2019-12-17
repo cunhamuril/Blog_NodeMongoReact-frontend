@@ -1,0 +1,14 @@
+/**
+* Dashboard-Card
+*/
+.dashboard-card {
+  transition: ease-out 0.2s;
+}
+
+.dashboard-card:hover {
+  transform: scale(1.04);
+}
+
+.dashboard-card:active {
+  transform: scale(0.9);
+}
