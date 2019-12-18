@@ -24,7 +24,7 @@ function NavbarPage() {
 
   return (
     <Router>
-      <MDBNavbar color="green accent-2" light expand="md">
+      <MDBNavbar color="blue-gradient" light expand="md">
         <MDBNavbarBrand>
           <a href="/">
             <strong

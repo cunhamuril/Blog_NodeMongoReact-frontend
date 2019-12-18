@@ -10,6 +10,9 @@ import {
   MDBModalHeader,
   MDBModalFooter,
   MDBInput,
+  MDBPagination,
+  MDBPageItem,
+  MDBPageNav,
 } from 'mdbreact';
 
 import api from '../../../../services/api'
@@ -18,10 +21,12 @@ const Categories = () => {
   const [apiData, setApiData] = useState([])
   const [data, setData] = useState({})
   const [modal, setModal] = useState(false)
+  const [categoryInfo, setCategoryInfo] = useState({})
+  const [page, setPage] = useState(1)
 
   useEffect(() => {
-    loadApiData()
-  }, []);
+    loadApiData(page)
+  }, [page]);
 
   function toggleModal() {
     setModal(!modal)
@@ -31,17 +36,39 @@ const Categories = () => {
    * API
    */
   // Função que carrega dados
-  async function loadApiData() {
-    await api.get('/admin/categories')
-      .then(res => setApiData(res.data))
+  async function loadApiData(page) {
+    await api.get(`/admin/categories?page=${page}`)
+      .then(res => {
+        const { docs, ...categoryInfo } = res.data
+
+        setApiData(docs)
+        setCategoryInfo(categoryInfo)
+      })
       .catch(err => console.error(err))
   }
+
+  // Funções de paginação
+  function prevPage() {
+    if (page === 1) return
+    setPage(page - 1)
+  }
+
+  function nextPage() {
+    if (page === categoryInfo.totalPages) return
+    setPage(page + 1)
+  }
+  /**
+   * 
+   */
 
   // Função que limpa campos do formulário e fecha o modal
   function toggleModalAndClearFields() {
     toggleModal()
 
-    setData({ _id: '', name: '', slug: '' })
+    // um delay para apagar dados do form
+    setTimeout(() => {
+      setData({ _id: '', name: '', slug: '' })
+    }, 500)
   }
 
   // Função que salva ou atualiza dados
@@ -163,8 +190,6 @@ const Categories = () => {
 
         <form onSubmit={handleSubmit}>
           <MDBModalBody>
-            {/* {data._id && <MDBInput type="hidden" value={data._id} />} */}
-
             <MDBInput
               value={data.name}
               onChange={e => setData({ ...data, name: e.target.value })}
@@ -210,6 +235,51 @@ const Categories = () => {
     )
   }
 
+  function renderPagination() {
+
+    // Condição que renderiza o número de páginas existentes e ativa a página atual
+    const active = categoryInfo.page;
+    let items = []
+    for (let i = 1; i <= categoryInfo.totalPages; i++) {
+      items.push(
+        <MDBPageItem key={i} active={i === active}>
+          <MDBPageNav
+            onClick={() => setPage(i)}
+          >
+            {i}
+          </MDBPageNav>
+        </MDBPageItem>
+      )
+    }
+
+    return (
+      <div className="d-flex justify-content-center align-items-center">
+        <MDBPagination className="mb-5">
+          <MDBPageItem disabled={page === 1 ? true : false}>
+            <MDBPageNav
+              aria-label="Anterior"
+              onClick={prevPage}
+            >
+              <span aria-hidden={true}>Anterior</span>
+            </MDBPageNav>
+          </MDBPageItem>
+
+          {/* Chamada dos items com numero de pages */}
+          {items}
+
+          <MDBPageItem disabled={page === categoryInfo.totalPages ? true : false}>
+            <MDBPageNav
+              aria-label="Previous"
+              onClick={nextPage}
+            >
+              <span aria-hidden="true">Próximo</span>
+            </MDBPageNav>
+          </MDBPageItem>
+        </MDBPagination>
+      </div>
+    )
+  }
+
   /**
    * Render main
    */
@@ -225,6 +295,7 @@ const Categories = () => {
 
       {renderModal()}
       {renderTable()}
+      {renderPagination()}
     </div>
   )
 }
