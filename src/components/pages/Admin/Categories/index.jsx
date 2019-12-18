@@ -10,12 +10,12 @@ import {
   MDBModalHeader,
   MDBModalFooter,
   MDBInput,
-  MDBPagination,
-  MDBPageItem,
-  MDBPageNav,
 } from 'mdbreact';
 
 import api from '../../../../services/api'
+
+import Pagination from '../../../template/Pagination'
+import Loading from '../../../template/Loading'
 
 const Categories = () => {
   const [apiData, setApiData] = useState([])
@@ -23,6 +23,7 @@ const Categories = () => {
   const [modal, setModal] = useState(false)
   const [categoryInfo, setCategoryInfo] = useState({})
   const [page, setPage] = useState(1)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     loadApiData(page)
@@ -41,25 +42,12 @@ const Categories = () => {
       .then(res => {
         const { docs, ...categoryInfo } = res.data
 
+        setLoading(false)
         setApiData(docs)
         setCategoryInfo(categoryInfo)
       })
       .catch(err => console.error(err))
   }
-
-  // Funções de paginação
-  function prevPage() {
-    if (page === 1) return
-    setPage(page - 1)
-  }
-
-  function nextPage() {
-    if (page === categoryInfo.totalPages) return
-    setPage(page + 1)
-  }
-  /**
-   * 
-   */
 
   // Função que limpa campos do formulário e fecha o modal
   function toggleModalAndClearFields() {
@@ -149,10 +137,10 @@ const Categories = () => {
   }
 
   function renderTable() {
-    if (!apiData) {
+    if (apiData.length === 0) {
       return (
         <center>
-          <h3 className="mt-3">Nenhuma categoria registrada</h3>
+          <h3 className="mt-5">Nenhuma categoria registrada</h3>
         </center>
       )
     } else {
@@ -235,51 +223,6 @@ const Categories = () => {
     )
   }
 
-  function renderPagination() {
-
-    // Condição que renderiza o número de páginas existentes e ativa a página atual
-    const active = categoryInfo.page;
-    let items = []
-    for (let i = 1; i <= categoryInfo.totalPages; i++) {
-      items.push(
-        <MDBPageItem key={i} active={i === active}>
-          <MDBPageNav
-            onClick={() => setPage(i)}
-          >
-            {i}
-          </MDBPageNav>
-        </MDBPageItem>
-      )
-    }
-
-    return (
-      <div className="d-flex justify-content-center align-items-center">
-        <MDBPagination className="mb-5">
-          <MDBPageItem disabled={page === 1 ? true : false}>
-            <MDBPageNav
-              aria-label="Anterior"
-              onClick={prevPage}
-            >
-              <span aria-hidden={true}>Anterior</span>
-            </MDBPageNav>
-          </MDBPageItem>
-
-          {/* Chamada dos items com numero de pages */}
-          {items}
-
-          <MDBPageItem disabled={page === categoryInfo.totalPages ? true : false}>
-            <MDBPageNav
-              aria-label="Previous"
-              onClick={nextPage}
-            >
-              <span aria-hidden="true">Próximo</span>
-            </MDBPageNav>
-          </MDBPageItem>
-        </MDBPagination>
-      </div>
-    )
-  }
-
   /**
    * Render main
    */
@@ -294,8 +237,16 @@ const Categories = () => {
       </MDBBtn>
 
       {renderModal()}
-      {renderTable()}
-      {renderPagination()}
+      {loading ? <Loading /> : renderTable()}
+      {(loading || apiData.length === 0 || categoryInfo.totalPages <= 1) ?
+        null :
+        <Pagination
+          page={page}
+          dataInfo={categoryInfo}
+          setPage={setPage}
+        />
+      }
+
     </div>
   )
 }
