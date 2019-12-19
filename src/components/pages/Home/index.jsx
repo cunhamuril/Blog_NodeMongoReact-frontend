@@ -6,6 +6,7 @@ import {
   MDBRow,
   MDBCol,
   MDBCardFooter,
+  MDBBtn,
 } from 'mdbreact';
 
 import Pagination from '../../template/Pagination'
@@ -57,9 +58,19 @@ const Home = () => {
                 <div className="mt-2">
                   <h2>{post.title}</h2>
                   <p>{post.description}</p>
+                  <div className="d-flex align-items-center justify-content-center">
+                    <MDBBtn
+                      color="success"
+                      href={`/post/${post.slug}`}
+                    >
+                      Saiba mais
+                  </MDBBtn>
+                  </div>
                 </div>
               </MDBCol>
             </MDBRow>
+
+
           </MDBCardBody>
 
           <MDBCardFooter>

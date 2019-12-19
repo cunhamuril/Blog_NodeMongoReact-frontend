@@ -23,7 +23,7 @@ import Footer from './components/template/Footer'
 function App() {
   return (
     <div className="App">
-      <ToastContainer draggable={true} position={"top-right"} autoClose={2500} />
+      <ToastContainer draggable={true} position={"bottom-right"} autoClose={2000} />
       <Header />
       <MDBContainer className="main">
         <Routes />

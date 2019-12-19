@@ -11,6 +11,8 @@ import {
   MDBModalHeader,
   MDBModalBody,
   MDBModalFooter,
+  MDBBreadcrumb,
+  MDBBreadcrumbItem,
 } from 'mdbreact';
 import { toast } from "react-toastify";
 
@@ -160,6 +162,13 @@ const Posts = () => {
     <div className="posts mt-5">
       {renderModal()}
 
+      <MDBBreadcrumb>
+        <MDBBreadcrumbItem>
+          <a href="/admin">Dashboard</a>
+        </MDBBreadcrumbItem>
+        <MDBBreadcrumbItem active>Postagens</MDBBreadcrumbItem>
+      </MDBBreadcrumb>
+
       <h1 className="display-3">Postagens</h1>
 
       <hr />
@@ -174,6 +183,11 @@ const Posts = () => {
 
       <div className="d-flex flex-column justify-content-center align-items-center">
         {loading ? <Loading /> : renderCards()}
+        {(apiData.length === 0 && !loading) &&
+          <div className="d-flex justify-content-center align-items-center mt-5">
+            <h3>Nenhuma postagem adicionada</h3>
+          </div>
+        }
       </div>
 
       <br />

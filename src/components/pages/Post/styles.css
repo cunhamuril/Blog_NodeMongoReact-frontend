@@ -1,0 +1,13 @@
+.post .thumbnail {
+  max-width: 700px;
+}
+
+.post figure.image img{
+  width: 100%;
+}
+
+.post blockquote {
+  padding-left: 20px;
+  border-left: 2px solid #BBB;
+  font-style: italic;
+}

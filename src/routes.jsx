@@ -2,6 +2,7 @@ import React from 'react'
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import Home from './components/pages/Home'
+import Post from './components/pages/Post';
 import HomeAdmin from './components/pages/Admin'
 import CategoriesAdmin from './components/pages/Admin/Categories'
 import PostsAdmin from './components/pages/Admin/Posts'
@@ -14,6 +15,8 @@ function Routes() {
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={Home} />
+
+        <Route exact path="/post/:slug" component={Post} />
 
         {/* Admin pages */}
         <Route exact path="/admin" component={HomeAdmin} />

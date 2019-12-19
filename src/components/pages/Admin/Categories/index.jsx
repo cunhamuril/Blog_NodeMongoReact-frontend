@@ -10,6 +10,8 @@ import {
   MDBModalHeader,
   MDBModalFooter,
   MDBInput,
+  MDBBreadcrumb,
+  MDBBreadcrumbItem,
 } from 'mdbreact';
 
 import api from '../../../../services/api'
@@ -228,7 +230,14 @@ const Categories = () => {
    */
   return (
     <div className="categories mt-5">
-      <h1 className="display-3">Categorias</h1>
+      <MDBBreadcrumb>
+        <MDBBreadcrumbItem>
+          <a href="/admin">Dashboard</a>
+        </MDBBreadcrumbItem>
+        <MDBBreadcrumbItem active>Categorias</MDBBreadcrumbItem>
+      </MDBBreadcrumb>
+
+      <h1 className="display-3 mt-4">Categorias</h1>
 
       <hr />
 

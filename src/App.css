@@ -25,6 +25,10 @@ body {
   width: 200px;
 }
 
+.breadcrumb-item {
+  font-size: 0.8em; 
+}
+
 @media (max-width: 768px) {
   .qr-code img{
     display: none;

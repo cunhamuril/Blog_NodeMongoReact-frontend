@@ -4,6 +4,8 @@ import {
   MDBBtn,
   MDBRow,
   MDBCol,
+  MDBBreadcrumb,
+  MDBBreadcrumbItem,
 } from 'mdbreact';
 import { toast } from "react-toastify";
 import CKEditor from '@ckeditor/ckeditor5-react';
@@ -66,6 +68,16 @@ const NewPost = ({ history }) => {
 
   return (
     <div className="new-post mt-5">
+      <MDBBreadcrumb>
+        <MDBBreadcrumbItem>
+          <a href="/admin">Dashboard</a>
+        </MDBBreadcrumbItem>
+        <MDBBreadcrumbItem>
+          <a href="/admin/posts">Postagens</a>
+        </MDBBreadcrumbItem>
+        <MDBBreadcrumbItem active>Nova postagem</MDBBreadcrumbItem>
+      </MDBBreadcrumb>
+
       <h1 className="display-3">Nova postagem</h1>
 
       <hr />
