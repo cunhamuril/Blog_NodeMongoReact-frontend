@@ -1,0 +1,10 @@
+label#thumbnail.edit:hover {  
+  filter: brightness(0.9);  
+}
+
+label#thumbnail.edit:hover .fa-pen {  
+  transition: ease-out 0.4s;
+  color: #FFF;
+  font-size: 4em;
+  display: block;
+}

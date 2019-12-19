@@ -1,11 +1,10 @@
 import React from 'react';
+import { Link } from "react-scroll";
 import {
   MDBPagination,
   MDBPageItem,
   MDBPageNav,
 } from 'mdbreact';
-
-// import { Container } from './styles';
 
 const Pagination = ({ page, dataInfo, setPage }) => {
   function prevPage() {
@@ -36,26 +35,33 @@ const Pagination = ({ page, dataInfo, setPage }) => {
   return (
     <div className="d-flex justify-content-center align-items-center">
       <MDBPagination className="mb-5">
-        <MDBPageItem disabled={page === 1 ? true : false}>
-          <MDBPageNav
-            aria-label="Anterior"
-            onClick={prevPage}
-          >
-            <span aria-hidden={true}>Anterior</span>
-          </MDBPageNav>
-        </MDBPageItem>
+        <Link to={page !== 1 && "header"} smooth={true} duration={300}>
+          <MDBPageItem disabled={page === 1 ? true : false}>
+            <MDBPageNav
+              aria-label="Anterior"
+              onClick={prevPage}
+            >
+              <span aria-hidden={true}>Anterior</span>
+            </MDBPageNav>
+          </MDBPageItem>
+        </Link>
 
-        {/* Chamada dos items com numero de pages */}
-        {items}
 
-        <MDBPageItem disabled={page === dataInfo.totalPages ? true : false}>
-          <MDBPageNav
-            aria-label="Previous"
-            onClick={nextPage}
-          >
-            <span aria-hidden="true">Próximo</span>
-          </MDBPageNav>
-        </MDBPageItem>
+        <Link to="header" smooth={true} duration={300} className="d-flex">
+          {/* Chamada dos items com numero de pages */}
+          {items}
+        </Link>
+
+        <Link to={page !== dataInfo.totalPages && "header"} smooth={true} duration={300}>
+          <MDBPageItem disabled={page === dataInfo.totalPages ? true : false}>
+            <MDBPageNav
+              aria-label="Previous"
+              onClick={nextPage}
+            >
+              <span aria-hidden="true">Próximo</span>
+            </MDBPageNav>
+          </MDBPageItem>
+        </Link>
       </MDBPagination>
     </div>
   )

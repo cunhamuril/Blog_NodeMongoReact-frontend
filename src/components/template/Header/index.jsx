@@ -6,11 +6,6 @@ import {
   MDBNavItem,
   MDBNavbarToggler,
   MDBCollapse,
-  // MDBFormInline,
-  MDBDropdown,
-  MDBDropdownToggle,
-  MDBDropdownMenu,
-  MDBDropdownItem
 } from "mdbreact";
 
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -24,7 +19,7 @@ function NavbarPage() {
 
   return (
     <Router>
-      <MDBNavbar color="blue-gradient" light expand="md">
+      <MDBNavbar className="header" color="blue-gradient" light expand="md">
         <MDBNavbarBrand>
           <a href="/">
             <strong
@@ -53,25 +48,8 @@ function NavbarPage() {
           </MDBNavbarNav>
 
           <MDBNavbarNav right>
-            {/* <MDBNavItem>
-              <MDBFormInline waves>
-                <div className="md-form my-0">
-                  <input className="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" />
-                </div>
-              </MDBFormInline>
-            </MDBNavItem> */}
-
             <MDBNavItem>
-              <MDBDropdown>
-                <MDBDropdownToggle nav caret>
-                  <span className="mr-2">Admin</span>
-                </MDBDropdownToggle>
-                <MDBDropdownMenu>
-                  <MDBDropdownItem href="/admin">Dashboard</MDBDropdownItem>
-                  <MDBDropdownItem href="/admin/categories">Categorias</MDBDropdownItem>
-                  <MDBDropdownItem href="#!">Postagens</MDBDropdownItem>
-                </MDBDropdownMenu>
-              </MDBDropdown>
+              <a className="nav-link" href="/admin">Admin</a>
             </MDBNavItem>
 
           </MDBNavbarNav>

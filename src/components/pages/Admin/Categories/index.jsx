@@ -67,9 +67,9 @@ const Categories = () => {
     const url = _id ? `/admin/categories/${_id}` : `/admin/categories`
 
     await api[method](url, data)
-      .then(req => {
+      .then(res => {
         loadApiData()
-        toast.success(req.data.msg)
+        toast.success(res.data.msg)
       })
       .catch(err => console.error(err))
   }
@@ -87,9 +87,9 @@ const Categories = () => {
   // Função que deleta dados
   async function deleteData(id) {
     await api.delete(`/admin/categories/${id}`)
-      .then(req => {
+      .then(res => {
         loadApiData()
-        toast.success(req.data.msg)
+        toast.success(res.data.msg)
       })
       .catch(err => console.error(err))
   }
@@ -238,13 +238,8 @@ const Categories = () => {
 
       {renderModal()}
       {loading ? <Loading /> : renderTable()}
-      {(loading || apiData.length === 0 || categoryInfo.totalPages <= 1) ?
-        null :
-        <Pagination
-          page={page}
-          dataInfo={categoryInfo}
-          setPage={setPage}
-        />
+      {(loading || apiData.length === 0 || categoryInfo.totalPages <= 1) ? null :
+        <Pagination page={page} dataInfo={categoryInfo} setPage={setPage} />
       }
 
     </div>

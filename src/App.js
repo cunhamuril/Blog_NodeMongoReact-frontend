@@ -11,6 +11,8 @@ import 'mdbreact/dist/css/mdb.css'
 
 import { MDBContainer } from "mdbreact";
 
+import qrCode from './assets/frame.png'
+
 // Routes
 import Routes from './routes'
 
@@ -26,6 +28,9 @@ function App() {
       <MDBContainer className="main">
         <Routes />
       </MDBContainer>
+      <div className="mt-3 qr-code d-flex align-items-center">
+        <img src={qrCode} alt="QR Code" width="50px" />
+      </div>
       <Footer />
     </div>
   );

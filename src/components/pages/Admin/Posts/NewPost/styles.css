@@ -1,0 +1,38 @@
+:root {
+  --input-color: #BBB;
+}
+
+label#thumbnail {
+  margin-bottom: 20px;
+  border: 1px dashed var(--input-color);
+  background-size: cover;
+  cursor: pointer;
+  height: 250px;
+  max-width: 450px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+label#thumbnail input{
+  display: none;
+}
+
+label#thumbnail.has-thumbnail{
+  border: 0;
+}
+
+label#thumbnail i{
+  font-size: 2em;
+  color: var(--input-color);
+}
+
+label#thumbnail.has-thumbnail i{
+  display: none;
+}
+
+
+
+
+
