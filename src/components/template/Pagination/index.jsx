@@ -35,7 +35,7 @@ const Pagination = ({ page, dataInfo, setPage }) => {
   return (
     <div className="d-flex justify-content-center align-items-center">
       <MDBPagination className="mb-5">
-        <Link to={page !== 1 && "header"} smooth={true} duration={300}>
+        <Link to={page !== 1 ? "header" : ""} smooth={true} duration={300}>
           <MDBPageItem disabled={page === 1 ? true : false}>
             <MDBPageNav
               aria-label="Anterior"

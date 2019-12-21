@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   MDBNavbar,
   MDBNavbarBrand,
@@ -6,16 +6,29 @@ import {
   MDBNavItem,
   MDBNavbarToggler,
   MDBCollapse,
+  MDBDropdown,
+  MDBDropdownToggle,
+  MDBDropdownMenu,
+  MDBDropdownItem
 } from "mdbreact";
 
 import { BrowserRouter as Router } from 'react-router-dom';
 
+import api from '../../../services/api'
+
 function NavbarPage() {
   const [isOpen, setIsOpen] = useState(false)
+  const [apiData, setApiData] = useState([]);
 
   function toggleCollapse() {
     setIsOpen(!isOpen)
   }
+
+  useEffect(() => {
+    api.get('/admin/categories/all')
+      .then(res => setApiData(res.data))
+      .catch(err => console.error(err))
+  }, []);
 
   return (
     <Router>
@@ -43,7 +56,18 @@ function NavbarPage() {
             </MDBNavItem>
 
             <MDBNavItem>
-              <a className="nav-link" href="#!">Categorias</a>
+              <MDBDropdown>
+                <MDBDropdownToggle nav caret>
+                  <span className="mr-2">Categorias</span>
+                </MDBDropdownToggle>
+                <MDBDropdownMenu>
+                  {apiData.map(categorie => (
+                    <MDBDropdownItem key={categorie._id} href={`/categories/${categorie.slug}`}>
+                      {categorie.name}
+                    </MDBDropdownItem>
+                  ))}
+                </MDBDropdownMenu>
+              </MDBDropdown>
             </MDBNavItem>
           </MDBNavbarNav>
 

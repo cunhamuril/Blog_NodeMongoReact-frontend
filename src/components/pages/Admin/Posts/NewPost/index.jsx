@@ -41,7 +41,8 @@ const NewPost = ({ history }) => {
   function saveData() {
     const data = new FormData()
 
-    if (+category === 0) toast.error("Selecione uma categoria")
+    if (+category === 0) toast.error("Selecione uma categoria!")
+    else if (!content) toast.error("Adicione conteúdo!")
     else {
       data.append('thumbnail', thumbnail)
       data.append('title', title)

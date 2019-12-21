@@ -93,7 +93,10 @@ const Categories = () => {
         loadApiData()
         toast.success(res.data.msg)
       })
-      .catch(err => console.error(err))
+      .catch(err => {
+        console.error(err)
+        toast.error(err.response.data.msg)
+      })
   }
 
   // Função que lida com o submit
