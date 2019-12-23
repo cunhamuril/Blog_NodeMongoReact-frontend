@@ -9,32 +9,35 @@ import {
   MDBBtn,
 } from 'mdbreact';
 
-import Pagination from '../../template/Pagination'
 import Loading from '../../template/Loading'
 
 import api from '../../../services/api'
 
-const Home = () => {
+const SearchPost = ({ match, history }) => {
   const [apiData, setApiData] = useState([])
-  const [apiInfo, setApiInfo] = useState({})
-  const [page, setPage] = useState(1)
   const [loading, setLoading] = useState(true)
+  const [notFound, setNotFound] = useState({})
 
   useEffect(() => {
-    setLoading(true)
-    loadApiData(page)
-  }, [page])
+    loadApiData()
+    // eslint-disable-next-line
+  }, [])
 
-  function loadApiData(page) {
-    api.get(`/admin/posts?page=${page}`)
+  function loadApiData() {
+    api.get(`/posts/search?value=${match.params.value}`)
       .then(res => {
-        const { docs, ...apiInfo } = res.data
-
-        setApiData(docs)
-        setApiInfo(apiInfo)
+        setApiData(res.data)
         setLoading(false)
       })
-      .catch(err => console.error(err))
+      .catch(err => {
+        const { response } = err
+
+        console.error(response)
+
+        if (response.status === 404) setNotFound(response.data)
+        else history.push("/")
+        setLoading(false)
+      })
   }
 
   function renderCards() {
@@ -87,24 +90,22 @@ const Home = () => {
 
   return (
     <div className="posts mt-5">
-      <h1 className="display-3">Bem vindo ao exBlog</h1>
+      <h1 className="display-3">Pesquisa</h1>
 
       <hr />
 
       <div className="d-flex flex-column justify-content-center align-items-center">
         {loading ? <Loading /> : renderCards()}
+        {notFound ? <h3 className="mt-5">{notFound.msg}</h3> : renderCards()}
       </div>
 
-      <br />
 
-      {(loading || apiData.length === 0 || apiInfo.totalPages <= 1) ? null :
-        <Pagination page={page} dataInfo={apiInfo} setPage={setPage} />
-      }
+      <br />
     </div>
   )
 };
 
-export default Home;
+export default SearchPost;
 
 
 

@@ -1,9 +1,9 @@
-.post .thumbnail {
-  max-width: 700px;
+img.thumbnail {    
+  max-width: 500px;
 }
 
 .post figure.image img{
-  width: 100%;
+  max-width: 100%;
 }
 
 .post blockquote {

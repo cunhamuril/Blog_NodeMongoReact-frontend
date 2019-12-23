@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react"
 import {
   MDBNavbar,
   MDBNavbarBrand,
@@ -9,7 +9,8 @@ import {
   MDBDropdown,
   MDBDropdownToggle,
   MDBDropdownMenu,
-  MDBDropdownItem
+  MDBDropdownItem,
+  MDBFormInline
 } from "mdbreact";
 
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -19,6 +20,7 @@ import api from '../../../services/api'
 function NavbarPage() {
   const [isOpen, setIsOpen] = useState(false)
   const [apiData, setApiData] = useState([]);
+  const [search, setSearch] = useState("");
 
   function toggleCollapse() {
     setIsOpen(!isOpen)
@@ -29,6 +31,12 @@ function NavbarPage() {
       .then(res => setApiData(res.data))
       .catch(err => console.error(err))
   }, []);
+
+  function handleSearch(e) {
+    e.preventDefault();
+
+    document.location.pathname = `/posts/search/${search}`
+  }
 
   return (
     <Router>
@@ -72,6 +80,21 @@ function NavbarPage() {
           </MDBNavbarNav>
 
           <MDBNavbarNav right>
+            <MDBNavItem>
+              <MDBFormInline waves onSubmit={handleSearch}>
+                <div className="md-form my-0">
+                  <input
+                    type="text"
+                    className="form-control mr-sm-2"
+                    placeholder="Pesquisar postagens"
+                    aria-label="Pesquisar postagens"
+                    onChange={e => setSearch(e.target.value)}
+                    value={search}
+                  />
+                </div>
+              </MDBFormInline>
+            </MDBNavItem>
+
             <MDBNavItem>
               <a className="nav-link" href="/admin">Admin</a>
             </MDBNavItem>

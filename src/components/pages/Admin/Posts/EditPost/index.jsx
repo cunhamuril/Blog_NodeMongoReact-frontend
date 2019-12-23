@@ -13,9 +13,12 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 import './styles.css'
 
+import Loading from '../../../../template/Loading'
+
 import api from '../../../../../services/api'
 
 const NewPost = ({ history, match }) => {
+  const [loading, setLoading] = useState(true);
   const [thumbnail, setThumbnail] = useState(null)
   const [thumbnailUrl, setThumbnailUrl] = useState(null)
   const [title, setTitle] = useState("")
@@ -56,7 +59,7 @@ const NewPost = ({ history, match }) => {
         setContent(content)
         setCategory(category)
 
-        console.log(thumbnail_url)
+        setLoading(false)
       })
       .catch(err => console.error(err))
   }
@@ -112,99 +115,99 @@ const NewPost = ({ history, match }) => {
 
       <hr />
 
-      <form className="mt-5" onSubmit={handleSubmit}>
+      {loading ? <Loading /> :
+        <form className="mt-5" onSubmit={handleSubmit}>
 
-        <center>
-          <label>Thumbnail</label>
-          <label
-            id="thumbnail"
-            style={{ backgroundImage: `url(${thumbnail ? preview : thumbnailUrl})` }}
-            className={(thumbnail || thumbnailUrl) ? 'has-thumbnail edit' : 'edit'}
-          >
-            <input
-              type="file"
-              onChange={e => setThumbnail(e.target.files[0])}
-            />
-            {/* Para o usuário pode selecionar mais de um arquivo é utilizado a propriedade multiple */}
+          <center>
+            <label>Thumbnail</label>
+            <label
+              id="thumbnail"
+              style={{ backgroundImage: `url(${thumbnail ? preview : thumbnailUrl})` }}
+              className={(thumbnail || thumbnailUrl) ? 'has-thumbnail edit' : 'edit'}
+            >
+              <input
+                type="file"
+                onChange={e => setThumbnail(e.target.files[0])}
+              />
+              {/* Para o usuário pode selecionar mais de um arquivo é utilizado a propriedade multiple */}
+              <i className="fas fa-pen"></i>
+            </label>
+          </center>
 
-            <i className="fas fa-camera"></i>
-            <i className="fas fa-pen"></i>
-          </label>
-        </center>
+          <MDBRow>
+            <MDBCol sm="12" md="6">
+              <MDBInput
+                label="Título"
+                group
+                type="text"
+                validate
+                required
+                onChange={e => setTitle(e.target.value)}
+                value={title}
+              />
+            </MDBCol>
+            <MDBCol sm="12" md="6">
+              <MDBInput
+                label="Slug"
+                group
+                type="text"
+                validate
+                required
+                onChange={e => setSlug(e.target.value)}
+                value={slug}
+              />
+            </MDBCol>
+          </MDBRow>
 
-        <MDBRow>
-          <MDBCol sm="12" md="6">
-            <MDBInput
-              label="Título"
-              group
-              type="text"
-              validate
-              required
-              onChange={e => setTitle(e.target.value)}
-              value={title}
-            />
-          </MDBCol>
-          <MDBCol sm="12" md="6">
-            <MDBInput
-              label="Slug"
-              group
-              type="text"
-              validate
-              required
-              onChange={e => setSlug(e.target.value)}
-              value={slug}
-            />
-          </MDBCol>
-        </MDBRow>
-
-        <MDBInput
-          label="Descrição"
-          group
-          type="text"
-          validate
-          required
-          onChange={e => setDescription(e.target.value)}
-          value={description}
-        />
-
-        <label className="mt-4 text-muted">Categoria: </label>
-        <select
-          className="browser-default custom-select"
-          onChange={e => setCategory(e.target.value)}
-          value={category}
-        >
-          <option value="0">Selecione a categoria</option>
-          {categories.map(category => (
-            <option key={category._id} value={category._id}>{category.name}</option>
-          ))}
-        </select>
-
-        <div className="mt-5">
-          <label className="text-muted">Conteúdo: </label>
-          <CKEditor
-            editor={ClassicEditor}
-            data={content}
-            onChange={(e, editor) => setContent(editor.getData())}
+          <MDBInput
+            label="Descrição"
+            group
+            type="text"
+            validate
             required
+            onChange={e => setDescription(e.target.value)}
+            value={description}
           />
-        </div>
 
-        <div className="mt-3">
-          <MDBBtn
-            color="danger"
-            onClick={() => history.push('/admin/posts')}
+          <label className="mt-4 text-muted">Categoria: </label>
+          <select
+            className="browser-default custom-select"
+            onChange={e => setCategory(e.target.value)}
+            value={category}
           >
-            Cancelar
+            <option value="0">Selecione a categoria</option>
+            {categories.map(category => (
+              <option key={category._id} value={category._id}>{category.name}</option>
+            ))}
+          </select>
+
+          <div className="mt-5">
+            <label className="text-muted">Conteúdo: </label>
+            <CKEditor
+              editor={ClassicEditor}
+              data={content}
+              onChange={(e, editor) => setContent(editor.getData())}
+              required
+            />
+          </div>
+
+          <div className="mt-3">
+            <MDBBtn
+              color="danger"
+              onClick={() => history.push('/admin/posts')}
+            >
+              Cancelar
           </MDBBtn>
 
-          <MDBBtn
-            color="success"
-            type="submit"
-          >
-            Salvar alterações
+            <MDBBtn
+              color="success"
+              type="submit"
+            >
+              Salvar alterações
           </MDBBtn>
-        </div>
-      </form>
+          </div>
+        </form>
+      }
     </div>
   )
 }
