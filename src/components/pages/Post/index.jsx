@@ -28,8 +28,6 @@ const Post = ({ match }) => {
       .catch(err => console.error(err))
   }, [slug])
 
-  console.log(category)
-
   const { date, title, description, content, thumbnail_url } = apiData
 
   return (
@@ -40,7 +38,7 @@ const Post = ({ match }) => {
             <a href="/">Home</a>
           </MDBBreadcrumbItem>
           <MDBBreadcrumbItem>
-            Categoria
+            <a href={`/categories/${category.slug}`}>{category.name}</a>
           </MDBBreadcrumbItem>
           <MDBBreadcrumbItem active>{title} &nbsp;</MDBBreadcrumbItem>
         </MDBBreadcrumb>

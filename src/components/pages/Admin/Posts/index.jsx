@@ -24,6 +24,7 @@ import Loading from '../../../template/Loading'
 import api from '../../../../services/api'
 
 const Posts = () => {
+  const [categories, setCategories] = useState([]);
   const [apiData, setApiData] = useState([])
   const [apiInfo, setApiInfo] = useState({})
   const [page, setPage] = useState(1)
@@ -33,7 +34,9 @@ const Posts = () => {
 
   useEffect(() => {
     loadApiData(page)
+    loadCategories()
   }, [page])
+
 
   function toggleModal(id) {
     setModal(!modal)
@@ -52,6 +55,24 @@ const Posts = () => {
       .catch(err => console.error(err))
   }
 
+  function loadCategories() {
+    api.get('/admin/categories/all')
+      .then(res => setCategories(res.data))
+      .catch(err => console.error(err))
+  }
+
+  function loadPostByCategory(slug, page) {
+    api.get(`/categories/${slug}?page=${page}`)
+      .then(res => {
+        const { docs, ...apiInfo } = res.data.post
+
+        setApiData(docs)
+        setApiInfo(apiInfo)
+        setLoading(false)
+      })
+      .catch(err => console.error(err))
+  }
+
   function deletePost(id) {
     api.delete(`/admin/posts/${id}`)
       .then(res => {
@@ -59,6 +80,15 @@ const Posts = () => {
         loadApiData()
       })
       .catch(err => console.error(err))
+  }
+
+  function handleSelect(event) {
+    setPage(1)
+    setLoading(true)
+
+    if (+event === 0) loadApiData(page)
+
+    loadPostByCategory(event, page)
   }
 
   function renderCards() {
@@ -156,8 +186,6 @@ const Posts = () => {
     )
   }
 
-  console.log(postId)
-
   return (
     <div className="posts mt-5">
       {renderModal()}
@@ -173,13 +201,21 @@ const Posts = () => {
 
       <hr />
 
-      <MDBBtn
-        className="px-3 mb-2 mt-5"
-        color="success"
-        href="/admin/posts/new"
-      >
-        <i className="fas fa-plus" /> Nova postagem
-      </MDBBtn>
+      <div className="px-3 mb-2 mt-5 d-flex align-items-center justify-content-between">
+        <MDBBtn
+          color="success"
+          href="/admin/posts/new"
+        >
+          <i className="fas fa-plus" /> Nova postagem
+        </MDBBtn>
+
+        <select className="browser-default custom-select" style={{ width: "230px" }}
+          onChange={e => handleSelect(e.target.value)}>
+          <option value="0">Todas as categorias</option>
+          {categories.map(category =>
+            <option key={category._id} value={category.slug}>{category.name}</option>)}
+        </select>
+      </div>
 
       <div className="d-flex flex-column justify-content-center align-items-center">
         {loading ? <Loading /> : renderCards()}
