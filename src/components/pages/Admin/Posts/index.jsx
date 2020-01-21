@@ -74,7 +74,9 @@ const Posts = () => {
   }
 
   function deletePost(id) {
-    api.delete(`/admin/posts/${id}`)
+    api.delete(`/admin/posts/${id}`, {
+      headers: { Authorization: `Bearer ${localStorage.EXBLOG_TOKEN}` }
+    })
       .then(res => {
         toast.success(res.data.msg)
         loadApiData()

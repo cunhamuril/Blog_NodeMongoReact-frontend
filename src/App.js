@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 
 // React Toastify
@@ -20,7 +20,13 @@ import Routes from './routes'
 import Header from './components/template/Header'
 import Footer from './components/template/Footer'
 
+import verifyToken from './utils/verifyToken'
+
 function App() {
+  useEffect(() => {
+    verifyToken()
+  }, [])
+
   return (
     <div className="App">
       <ToastContainer draggable={true} position={"bottom-right"} autoClose={2000} />

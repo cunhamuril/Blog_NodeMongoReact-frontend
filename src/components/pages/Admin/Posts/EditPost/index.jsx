@@ -84,7 +84,9 @@ const NewPost = ({ history, match }) => {
       data.append('category', category)
       data.append('content', content)
 
-      api.patch(`/admin/posts/${id}`, data)
+      api.patch(`/admin/posts/${id}`, data, {
+        headers: { Authorization: `Bearer ${localStorage.EXBLOG_TOKEN}` }
+      })
         .then(res => {
           toast.success(res.data.msg)
           history.push('/admin/posts')
