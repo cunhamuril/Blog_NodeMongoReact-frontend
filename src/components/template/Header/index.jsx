@@ -135,7 +135,10 @@ function NavbarPage() {
                     <MDBDropdownMenu>
                       <MDBDropdownItem href="/admin">
                         Painel de Controle
-                    </MDBDropdownItem>
+                      </MDBDropdownItem>
+                      <MDBDropdownItem href="/admin/user">
+                        Configurações
+                      </MDBDropdownItem>
                       <MDBDropdownItem
                         onClick={() => {
                           localStorage.clear()
