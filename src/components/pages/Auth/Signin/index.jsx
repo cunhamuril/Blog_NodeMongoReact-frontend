@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 import { Redirect } from "react-router";
 
 import api from '../../../../services/api'
-import verifyToken from '../../../../utils/verifyToken'
+import { signin, isAuthenticated } from "../../../../services/auth";
 
 const Signin = () => {
   const [userData, setUserData] = useState({});
@@ -23,16 +23,11 @@ const Signin = () => {
 
     api.post('/admin/signin', userData)
       .then(async res => {
-        localStorage.setItem('EXBLOG_TOKEN', res.data.token)
-        localStorage.setItem('EXBLOG_USER_ID', res.data.user_id)
+        const { token, user_id } = res.data
 
-        /**
-         * Como não estou utilizando o Redux ainda, fiz uma "gambiarra" aqui:         
-         * Cada vez que chamar esta função, deverá ser criado um state 
-         * logged para renderizar a página admin
-         */
-        verifyToken()
-        setLogged(await verifyToken())
+        signin(token, user_id)
+
+        setLogged(await isAuthenticated())
       })
       .catch(err => {
         toast.error(err.response.data.msg)

@@ -17,9 +17,7 @@ import {
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import api from '../../../services/api'
-import verifyToken from '../../../utils/verifyToken'
-
-const { IS_LOGGED } = localStorage
+import { isAuthenticated, getUserId, signout } from '../../../services/auth'
 
 function NavbarPage() {
   const [isOpen, setIsOpen] = useState(false)
@@ -42,22 +40,13 @@ function NavbarPage() {
     loadUserData()
   }, [])
 
-  useEffect(() => {
-    async function isLogged() {
-      setLogged(await verifyToken())
-    }
-
-    isLogged()
-  }, [])
-
   function loadUserData() {
-    if (IS_LOGGED) {
-      const { EXBLOG_USER_ID, EXBLOG_TOKEN } = localStorage
-
-      api.get(`/admin/users/${EXBLOG_USER_ID}`, {
-        headers: { Authorization: `Bearer ${EXBLOG_TOKEN}` }
-      })
-        .then(res => setUserData(res.data))
+    if (isAuthenticated()) {
+      api.get(`/admin/users/${getUserId()}`)
+        .then(res => {
+          setUserData(res.data)
+          setLogged(isAuthenticated())
+        })
         .catch(err => console.error(err))
     }
   }
@@ -141,7 +130,7 @@ function NavbarPage() {
                       </MDBDropdownItem>
                       <MDBDropdownItem
                         onClick={() => {
-                          localStorage.clear()
+                          signout()
                           setLogged(false)
                         }}
                         href={

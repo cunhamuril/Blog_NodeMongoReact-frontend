@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { Redirect } from 'react-router-dom'
 
 import api from '../../../../../services/api'
+import { getUserId } from '../../../../../services/auth'
 
 const DataSettings = ({ history }) => {
   const [collapse, setCollapse] = useState("");
@@ -15,12 +16,9 @@ const DataSettings = ({ history }) => {
   }
 
   function handleSubmit(e) {
-    const { EXBLOG_USER_ID, EXBLOG_TOKEN } = localStorage
-
     e.preventDefault()
 
-    api.delete(`/admin/users/${EXBLOG_USER_ID}`, {
-      headers: { Authorization: `Bearer ${EXBLOG_TOKEN}` },
+    api.delete(`/admin/users/${getUserId()}`, {
       data: { password },
     })
       .then(res => {

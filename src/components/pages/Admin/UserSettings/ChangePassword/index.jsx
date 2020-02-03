@@ -3,18 +3,16 @@ import { MDBInput, MDBBtn } from 'mdbreact'
 import { toast } from "react-toastify";
 
 import api from '../../../../../services/api'
+import { getUserId } from '../../../../../services/auth'
+
 
 const ChangePassword = () => {
   const [userData, setUserData] = useState({});
 
-  const { EXBLOG_USER_ID, EXBLOG_TOKEN } = localStorage
-
   function handleSubmit(e) {
     e.preventDefault()
 
-    api.patch(`/admin/users/${EXBLOG_USER_ID}`, userData, {
-      headers: { Authorization: `Bearer ${EXBLOG_TOKEN}` }
-    })
+    api.patch(`/admin/users/${getUserId()}`, userData)
       .then(res => {
         toast.success(res.data.msg)
         setUserData({

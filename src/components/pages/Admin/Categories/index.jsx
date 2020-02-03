@@ -68,9 +68,7 @@ const Categories = () => {
     const method = _id ? 'put' : 'post'
     const url = _id ? `/admin/categories/${_id}` : `/admin/categories`
 
-    await api[method](url, data, {
-      headers: { Authorization: `Bearer ${localStorage.EXBLOG_TOKEN}` }
-    })
+    await api[method](url, data)
       .then(res => {
         loadApiData()
         toast.success(res.data.msg)
@@ -90,9 +88,7 @@ const Categories = () => {
 
   // Função que deleta dados
   async function deleteData(id) {
-    await api.delete(`/admin/categories/${id}`, {
-      headers: { Authorization: `Bearer ${localStorage.EXBLOG_TOKEN}` }
-    })
+    await api.delete(`/admin/categories/${id}`)
       .then(res => {
         loadApiData()
         toast.success(res.data.msg)

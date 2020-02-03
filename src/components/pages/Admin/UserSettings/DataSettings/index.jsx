@@ -5,18 +5,15 @@ import { toast } from "react-toastify";
 import Loading from '../../../../template/Loading'
 
 import api from '../../../../../services/api'
+import { getUserId } from '../../../../../services/auth'
 
 const DataSettings = () => {
   const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(true);
 
-  const { EXBLOG_USER_ID, EXBLOG_TOKEN } = localStorage
-
   useEffect(() => {
     function loadUserData() {
-      api.get(`/admin/users/${EXBLOG_USER_ID}`, {
-        headers: { Authorization: `Bearer ${EXBLOG_TOKEN}` }
-      })
+      api.get(`/admin/users/${getUserId()}`)
         .then(res => {
           setUserData(res.data)
           setLoading(false)
@@ -25,14 +22,12 @@ const DataSettings = () => {
     }
 
     loadUserData()
-  }, [EXBLOG_USER_ID, EXBLOG_TOKEN])
+  }, [])
 
   function handleSubmit(e) {
     e.preventDefault()
 
-    api.patch(`/admin/users/${EXBLOG_USER_ID}`, userData, {
-      headers: { Authorization: `Bearer ${EXBLOG_TOKEN}` }
-    })
+    api.patch(`/admin/users/${getUserId()}`)
       .then(res => {
         toast.success(res.data.msg)
       })

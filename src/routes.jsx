@@ -15,25 +15,20 @@ import NewPost from './components/pages/Admin/Posts/NewPost'
 import EditPost from './components/pages/Admin/Posts/EditPost'
 import UserSettings from './components/pages/Admin/UserSettings'
 
-function PrivateRoute({ component: Component, ...rest }) {
-  return (
-    <Route
-      {...rest}
-      render={props =>
-        localStorage.IS_LOGGED ? (
-          <Component {...props} />
-        ) : (
-            <Redirect
-              to={{
-                pathname: "/signin",
-                state: { from: props.location }
-              }}
-            />
-          )
-      }
-    />
-  );
-}
+import { isAuthenticated } from "./services/auth";
+
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={props =>
+      isAuthenticated() ? (
+        <Component {...props} />
+      ) : (
+          <Redirect to={{ pathname: "/signin", state: { from: props.location } }} />
+        )
+    }
+  />
+);
 
 function Routes() {
   return (

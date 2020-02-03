@@ -51,9 +51,7 @@ const NewPost = ({ history }) => {
       data.append('category', category)
       data.append('content', content)
 
-      api.post('/admin/posts', data, {
-        headers: { Authorization: `Bearer ${localStorage.EXBLOG_TOKEN}` }
-      })
+      api.post('/admin/posts', data)
         .then(res => {
           toast.success(res.data.msg)
           history.push('/admin/posts')
