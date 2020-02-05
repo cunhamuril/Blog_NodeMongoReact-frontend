@@ -14,6 +14,8 @@ import { Redirect } from "react-router";
 import api from '../../../../services/api'
 import { signin, isAuthenticated } from "../../../../services/auth";
 
+import '../styles.css'
+
 const Signin = () => {
   const [userData, setUserData] = useState({});
   const [logged, setLogged] = useState(false)
@@ -37,9 +39,9 @@ const Signin = () => {
 
   return (
     logged ? <Redirect to="/admin" /> :
-      <div className="d-flex justify-content-center align-items-center mt-5">
+      <div className="d-flex justify-content-center align-items-center mt-5 signin">
         <MDBCard style={{ width: 500 }}>
-          <MDBCardHeader color="blue-gradient" className="d-flex align-items-center justify-content-center">
+          <MDBCardHeader className="d-flex align-items-center justify-content-center card-header">
             <h3 className="light-text mt-3"><MDBIcon icon="user" /> Login</h3>
           </MDBCardHeader>
           <MDBCardBody>
@@ -64,7 +66,7 @@ const Signin = () => {
               <MDBBtn
                 type="submit"
                 block
-                color="blue"
+                color="red"
               >Entrar</MDBBtn>
             </form>
             <div className="mt-3 text-muted text-center">

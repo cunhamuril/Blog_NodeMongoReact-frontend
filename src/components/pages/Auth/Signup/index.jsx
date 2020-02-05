@@ -11,6 +11,8 @@ import { toast } from 'react-toastify'
 
 import api from '../../../../services/api'
 
+import '../styles.css'
+
 const Signup = ({ history }) => {
   const [userData, setUserData] = useState({});
 
@@ -33,9 +35,9 @@ const Signup = ({ history }) => {
   }
 
   return (
-    <div className="d-flex justify-content-center align-items-center my-5">
+    <div className="d-flex justify-content-center align-items-center my-5 auth">
       <MDBCard style={{ width: 500 }}>
-        <MDBCardHeader color="blue-gradient" className="d-flex align-items-center justify-content-center">
+        <MDBCardHeader className="d-flex align-items-center justify-content-center card-header">
           <h3 className="light-text mt-3"><MDBIcon icon="user-plus" /> Cadastro</h3>
         </MDBCardHeader>
         <MDBCardBody>
@@ -83,7 +85,7 @@ const Signup = ({ history }) => {
             <MDBBtn
               type="submit"
               block
-              color="blue"
+              color="red"
             >Salvar</MDBBtn>
           </form>
           <div className="mt-3 text-muted text-center">

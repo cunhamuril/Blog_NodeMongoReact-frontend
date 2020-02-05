@@ -1,9 +1,17 @@
+:root {
+  --primary-color: #1F7A8C;
+  --primary-light: #BFDBF7;
+  --primary-dark: #053C5E;  
+  --secondary-dark: #A31621;
+  --secondary-color: #DB222A;
+}
+
 @import url('https://fonts.googleapis.com/css?family=Shadows+Into+Light&display=swap');
 
-body {
+body, #root {
   margin: 0;
   padding: 0;
-  background-color: #F9F9F9;
+  background-color: #F9F9F9;  
 }
 
 .main {
@@ -12,4 +20,8 @@ body {
 
 .breadcrumb-item {
   font-size: 0.8em; 
+}
+
+.text-secondary-custom {
+  color: var(--primary-dark);
 }

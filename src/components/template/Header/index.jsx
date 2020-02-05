@@ -19,6 +19,8 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import api from '../../../services/api'
 import { isAuthenticated, getUserId, signout } from '../../../services/auth'
 
+import './styles.css'
+
 function NavbarPage() {
   const [isOpen, setIsOpen] = useState(false)
   const [apiData, setApiData] = useState([]);
@@ -59,19 +61,18 @@ function NavbarPage() {
 
   return (
     <Router>
-      <MDBNavbar className="header" color="blue-gradient" light expand="md">
+      <MDBNavbar className="header" dark expand="md">
         <div className="container">
           <MDBNavbarBrand>
             <a href="/">
               <strong
-                className="dark-text"
+                className="dark-text logo"
                 style={{
-                  color: "#000",
                   fontFamily: "'Shadows Into Light', cursive",
                   fontSize: "1.5em"
                 }}
               >
-                exBlog
+                Blog
             </strong>
             </a>
           </MDBNavbarBrand>
@@ -126,7 +127,7 @@ function NavbarPage() {
                         Painel de Controle
                       </MDBDropdownItem>
                       <MDBDropdownItem href="/admin/user">
-                        Configurações
+                        Configurações da conta
                       </MDBDropdownItem>
                       <MDBDropdownItem
                         onClick={() => {

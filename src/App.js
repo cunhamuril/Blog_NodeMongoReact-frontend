@@ -18,11 +18,11 @@ import Routes from './routes'
 import Header from './components/template/Header'
 import Footer from './components/template/Footer'
 
-import verifyToken from './utils/verifyToken'
+import { isAuthenticated } from './services/auth'
 
 function App() {
   useEffect(() => {
-    verifyToken()
+    isAuthenticated()
   }, [])
 
   return (

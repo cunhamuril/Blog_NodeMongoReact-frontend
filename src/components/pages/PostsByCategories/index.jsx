@@ -48,7 +48,14 @@ const PostsByCategories = ({ match }) => {
   function renderCards() {
     return (
       apiData.map(post => (
-        <MDBCard key={post._id} className="mt-4" style={{ width: '100%', maxWidth: '800px' }}>
+        <MDBCard
+          key={post._id}
+          className="mt-4"
+          style={{
+            width: '100%',
+            maxWidth: '800px',
+          }}
+        >
 
           <MDBCardHeader>
             <small className="text-muted">{post.category.name}</small>
@@ -69,7 +76,7 @@ const PostsByCategories = ({ match }) => {
                   <p>{post.description}</p>
                   <div className="d-flex align-items-center justify-content-center">
                     <MDBBtn
-                      color="success"
+                      color="red accent-4"
                       href={`/post/${post.slug}`}
                     >
                       Saiba mais

@@ -11,3 +11,9 @@ img.thumbnail {
   border-left: 2px solid #BBB;
   font-style: italic;
 }
+
+.post .content {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

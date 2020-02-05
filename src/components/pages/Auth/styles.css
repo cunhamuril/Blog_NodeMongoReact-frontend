@@ -1,0 +1,4 @@
+.auth .card-header {
+  background-color: var(--primary-dark);
+  color: var(--primary-light);
+}

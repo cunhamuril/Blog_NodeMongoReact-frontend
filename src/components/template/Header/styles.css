@@ -1,0 +1,7 @@
+.header {
+  background-color: var(--primary-dark);
+}
+
+.header .logo {
+  color: var(--primary-light);
+}

@@ -20,7 +20,7 @@ function UserSettings() {
 
   return (
     <div className="user-settings mt-5">
-      <h1 className="display-3">Configurações</h1>
+      <h1 className="display-3">Configurações da conta</h1>
 
       <hr />
       <MDBNav className="nav-tabs mt-5">

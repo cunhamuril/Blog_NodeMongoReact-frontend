@@ -40,7 +40,14 @@ const Home = () => {
   function renderCards() {
     return (
       apiData.map(post => (
-        <MDBCard key={post._id} className="mt-4" style={{ width: '100%', maxWidth: '800px' }}>
+        <MDBCard
+          key={post._id}
+          className="mt-4 text-dark"
+          style={{
+            width: '100%',
+            maxWidth: '800px',
+          }}
+        >
 
           <MDBCardHeader>
             <small className="text-muted">{post.category.name}</small>
@@ -61,7 +68,7 @@ const Home = () => {
                   <p>{post.description}</p>
                   <div className="d-flex align-items-center justify-content-center">
                     <MDBBtn
-                      color="success"
+                      color="red"
                       href={`/post/${post.slug}`}
                     >
                       Saiba mais
@@ -87,7 +94,7 @@ const Home = () => {
 
   return (
     <div className="posts mt-5">
-      <h1 className="display-3">Bem vindo ao exBlog</h1>
+      <h1 className="display-3 text-secondary-custom">Bem vindo ao Blog</h1>
 
       <hr />
 

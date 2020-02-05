@@ -64,7 +64,7 @@ const SearchPost = ({ match, history }) => {
                   <p>{post.description}</p>
                   <div className="d-flex align-items-center justify-content-center">
                     <MDBBtn
-                      color="success"
+                      color="red accent-4"
                       href={`/post/${post.slug}`}
                     >
                       Saiba mais
