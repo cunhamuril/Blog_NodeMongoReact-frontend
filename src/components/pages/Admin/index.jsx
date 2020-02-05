@@ -16,21 +16,21 @@ const Admin = () => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    function loadApiData() {
+      api.get('/admin/categories')
+        .then(res => setCategoriesQtd(res.data.totalDocs))
+        .catch(err => console.error(err))
+
+      api.get('/admin/posts')
+        .then(res => {
+          setPostsQtd(res.data.totalDocs)
+          setLoading(false)
+        })
+        .catch(err => console.error(err))
+    }
+
     loadApiData()
   }, [])
-
-  function loadApiData() {
-    api.get('/admin/categories')
-      .then(res => setCategoriesQtd(res.data.totalDocs))
-      .catch(err => console.error(err))
-
-    api.get('/admin/posts')
-      .then(res => {
-        setPostsQtd(res.data.totalDocs)
-        setLoading(false)
-      })
-      .catch(err => console.error(err))
-  }
 
   function renderCard(title, qtdy, color, icon) {
     return (

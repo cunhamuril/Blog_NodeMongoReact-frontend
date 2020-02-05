@@ -27,7 +27,7 @@ const DataSettings = () => {
   function handleSubmit(e) {
     e.preventDefault()
 
-    api.patch(`/admin/users/${getUserId()}`)
+    api.patch(`/admin/users/${getUserId()}`, userData)
       .then(res => {
         toast.success(res.data.msg)
       })

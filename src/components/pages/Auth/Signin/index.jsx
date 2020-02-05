@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   MDBCard,
   MDBCardHeader,
@@ -20,16 +20,18 @@ const Signin = () => {
   const [userData, setUserData] = useState({});
   const [logged, setLogged] = useState(false)
 
+  useEffect(() => {
+    setLogged(isAuthenticated())
+  }, []);
+
   function handleSubmit(e) {
     e.preventDefault()
 
     api.post('/admin/signin', userData)
-      .then(async res => {
+      .then(res => {
         const { token, user_id } = res.data
-
         signin(token, user_id)
-
-        setLogged(await isAuthenticated())
+        setLogged(isAuthenticated())
       })
       .catch(err => {
         toast.error(err.response.data.msg)

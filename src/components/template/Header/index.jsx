@@ -39,19 +39,19 @@ function NavbarPage() {
   }, []);
 
   useEffect(() => {
+    function loadUserData() {
+      if (isAuthenticated()) {
+        api.get(`/admin/users/${getUserId()}`)
+          .then(res => {
+            setUserData(res.data)
+            setLogged(isAuthenticated())
+          })
+          .catch(err => console.error(err))
+      }
+    }
+
     loadUserData()
   }, [])
-
-  function loadUserData() {
-    if (isAuthenticated()) {
-      api.get(`/admin/users/${getUserId()}`)
-        .then(res => {
-          setUserData(res.data)
-          setLogged(isAuthenticated())
-        })
-        .catch(err => console.error(err))
-    }
-  }
 
   function handleSearch(e) {
     e.preventDefault();
@@ -116,35 +116,37 @@ function NavbarPage() {
                 </MDBFormInline>
               </MDBNavItem>
 
-              {logged ? (
-                <MDBNavItem>
-                  <MDBDropdown>
-                    <MDBDropdownToggle nav caret>
-                      <span className="mr-2"><MDBIcon icon="user" /> {userData.username}</span>
-                    </MDBDropdownToggle>
-                    <MDBDropdownMenu>
-                      <MDBDropdownItem href="/admin">
-                        Painel de Controle
+              {logged
+                ? (
+                  <MDBNavItem>
+                    <MDBDropdown>
+                      <MDBDropdownToggle nav caret>
+                        <span className="mr-2"><MDBIcon icon="user" /> {userData.username}</span>
+                      </MDBDropdownToggle>
+                      <MDBDropdownMenu>
+                        <MDBDropdownItem href="/admin">
+                          Painel de Controle
                       </MDBDropdownItem>
-                      <MDBDropdownItem href="/admin/user">
-                        Configurações da conta
+                        <MDBDropdownItem href="/admin/user">
+                          Configurações da conta
                       </MDBDropdownItem>
-                      <MDBDropdownItem
-                        onClick={() => {
-                          signout()
-                          setLogged(false)
-                        }}
-                        href={
-                          document.location.pathname.match(/\/[admin/. admin]/) ?
-                            "/signin" : "#!"
-                        }
-                      >
-                        Sair
+                        <MDBDropdownItem
+                          onClick={() => {
+                            signout()
+                            setLogged(false)
+                          }}
+                          href={
+                            document.location.pathname.match(/\/[admin/. admin]/) ?
+                              "/signin" : "#!"
+                          }
+                        >
+                          Sair
                     </MDBDropdownItem>
-                    </MDBDropdownMenu>
-                  </MDBDropdown>
-                </MDBNavItem>
-              ) : (
+                      </MDBDropdownMenu>
+                    </MDBDropdown>
+                  </MDBNavItem>
+                )
+                : (
                   <MDBNavItem>
                     <a className="nav-link" href="/signin">Login</a>
                   </MDBNavItem>
